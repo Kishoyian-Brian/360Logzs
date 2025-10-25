@@ -13,6 +13,9 @@ import { WebhookController } from './webhook.controller';
     }),
     TelegrafModule.forRoot({
       token: process.env.BOT_TOKEN || '',
+      launchOptions: {
+        dropPendingUpdates: true,
+      },
       ...(process.env.NODE_ENV === 'production' && {
         webhook: {
           domain: process.env.WEBHOOK_URL,

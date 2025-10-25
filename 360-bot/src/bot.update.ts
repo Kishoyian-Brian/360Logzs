@@ -6,38 +6,43 @@ export class BotUpdate {
   // Runs when user presses "Start" or visits ?start=welcome
   @Start()
   async start(@Ctx() ctx: Context) {
-    // Extract start payload from the command text
-    const payload = ctx.message && 'text' in ctx.message 
-      ? ctx.message.text.split(' ')[1] 
-      : undefined;
+    try {
+      // Extract start payload from the command text
+      const payload = ctx.message && 'text' in ctx.message 
+        ? ctx.message.text.split(' ')[1] 
+        : undefined;
 
-    if (payload === 'welcome') {
-      // Send welcome image with caption
-      await ctx.replyWithPhoto(
-        'https://i.pinimg.com/originals/75/b8/1b/75b81bbb626d99d737df0b71d05492db.png',
-        {
-          caption: '👋 Welcome to WIILIAM SMITH EMPIRE! Glad to have you here.\n\nThis is a beautiful welcome image for you! 🌟'
-        }
-      );
-    } else {
-      // Send regular welcome with image
-      await ctx.replyWithPhoto(
-        'https://i.pinimg.com/originals/75/b8/1b/75b81bbb626d99d737df0b71d05492db.png',
-        {
-          caption: `👋 Hello ${ctx.from?.first_name || 'there'}!\nWelcome to WILLIAM SMITH EMPIRE 😊\nUse /help to see what I can do.\n\n📘 Here is a list of our available products:\n\n` +
-        `/CashApp - View CashApp offers\n` +
-        `/Paypal - View PayPal offers\n` +
-        `/ChimeBank - View Chime Bank details\n` +
-        `/WellsFargo - View Wells Fargo info\n` +
-        `/Huntington - View Huntington Bank deals\n` +
-        `/ChaseBank - View Chase Bank options\n` +
-        `/BankofAmerica - View BOA offers\n` +
-        `/CoinBase - View CoinBase details\n` +
-        `/WoodforestBank - View Woodforest Bank offers\n\n` +
-        `❓ /help - Show help guide and instructions`
-        }
-        
-      );
+      if (payload === 'welcome') {
+        // Send welcome image with caption
+        await ctx.replyWithPhoto(
+          'https://i.pinimg.com/originals/75/b8/1b/75b81bbb626d99d737df0b71d05492db.png',
+          {
+            caption: '👋 Welcome to WIILIAM SMITH EMPIRE! Glad to have you here.\n\nThis is a beautiful welcome image for you! 🌟'
+          }
+        );
+      } else {
+        // Send regular welcome with image
+        await ctx.replyWithPhoto(
+          'https://i.pinimg.com/originals/75/b8/1b/75b81bbb626d99d737df0b71d05492db.png',
+          {
+            caption: `👋 Hello ${ctx.from?.first_name || 'there'}!\nWelcome to WILLIAM SMITH EMPIRE 😊\nUse /help to see what I can do.\n\n📘 Here is a list of our available products:\n\n` +
+          `/CashApp - View CashApp offers\n` +
+          `/Paypal - View PayPal offers\n` +
+          `/ChimeBank - View Chime Bank details\n` +
+          `/WellsFargo - View Wells Fargo info\n` +
+          `/Huntington - View Huntington Bank deals\n` +
+          `/ChaseBank - View Chase Bank options\n` +
+          `/BankofAmerica - View BOA offers\n` +
+          `/CoinBase - View CoinBase details\n` +
+          `/WoodforestBank - View Woodforest Bank offers\n\n` +
+          `💡 **Need help?** Type /help for a complete guide!`
+          }
+          
+        );
+      }
+    } catch (error) {
+      console.error('Error in start command:', error);
+      await ctx.reply('❌ Sorry, something went wrong. Please try again later.');
     }
   }
 
@@ -423,7 +428,12 @@ Woodforest Bank provides community-focused banking with personalized service, co
 
   @Action('back_to_menu')
   async backToMenu(@Ctx() ctx: Context) {
-    await ctx.answerCbQuery('🔙 Returning to main menu...');
+    try {
+      await ctx.answerCbQuery('🔙 Returning to main menu...');
+    } catch (error) {
+      // Ignore callback query timeout errors
+      console.log('Callback query timeout (normal behavior)');
+    }
     await this.start(ctx);
   }
 }
