@@ -30,10 +30,11 @@ export class BotUpdate {
         `/ChimeBank - View Chime Bank details\n` +
         `/WellsFargo - View Wells Fargo info\n` +
         `/Huntington - View Huntington Bank deals\n` +
-        `/ChaseBank - View Chase Bank options\n` +                                                                                                                                                                                                                                                                                                          
+        `/ChaseBank - View Chase Bank options\n` +
         `/BankofAmerica - View BOA offers\n` +
         `/CoinBase - View CoinBase details\n` +
-        `/WoodforestBank - View Woodforest Bank offers`
+        `/WoodforestBank - View Woodforest Bank offers\n\n` +
+        `❓ /help - Show help guide and instructions`
         }
         
       );
@@ -365,6 +366,59 @@ Woodforest Bank provides community-focused banking with personalized service, co
         ...woodforestKeyboard
       }
     );
+  }
+
+  @Command('help')
+  async help(@Ctx() ctx: Context) {
+    const helpMessage = `🆘 **WILLIAM SMITH EMPIRE - HELP GUIDE** 🆘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 **How to Use This Bot:**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📱 **Available Commands:**
+
+💳 **Payment Services:**
+• /CashApp - View CashApp premium package
+• /Paypal - View PayPal premium package
+
+🏦 **Banking Services:**
+• /ChimeBank - View Chime Bank logs
+• /WellsFargo - View Wells Fargo logs
+• /Huntington - View Huntington Bank logs
+• /ChaseBank - View Chase Bank logs
+• /BankofAmerica - View Bank of America logs
+• /WoodforestBank - View Woodforest Bank logs
+
+₿ **Crypto Services:**
+• /CoinBase - View Coinbase premium package
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 **How to Run the App:**
+
+1️⃣ **Start the Bot:**
+   • Send /start to begin
+
+2️⃣ **Browse Products:**
+   • Type any command (e.g., /CashApp)
+   • View product details and features
+   • Click "🛒 BUY NOW" to purchase
+
+3️⃣ **Navigation:**
+   • Use "🔙 Back to Menu" to return to main menu
+   • All commands show product info with purchase buttons
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 **Tips:**
+• Each command shows unique product details
+• Contact support if you need assistance
+
+
+*Need more help? Just send a message!*`;
+
+    await ctx.reply(helpMessage, { parse_mode: 'Markdown' });
   }
 
   @Action('back_to_menu')

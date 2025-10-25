@@ -4,6 +4,7 @@ import { TelegrafModule } from 'nestjs-telegraf';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BotUpdate } from './bot.update';
+import { WebhookController } from './webhook.controller';
 
 @Module({
   imports: [
@@ -12,9 +13,15 @@ import { BotUpdate } from './bot.update';
     }),
     TelegrafModule.forRoot({
       token: process.env.BOT_TOKEN || '',
+      ...(process.env.NODE_ENV === 'production' && {
+        webhook: {
+          domain: process.env.WEBHOOK_URL,
+          path: `/webhook/${process.env.BOT_TOKEN}`,
+        },
+      }),
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, WebhookController],
   providers: [AppService, BotUpdate],
 })
 export class AppModule {}
